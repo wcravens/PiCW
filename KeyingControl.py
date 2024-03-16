@@ -175,4 +175,6 @@ def reset_abort_request():
 #
 setspeed(18)
 setlettergap(3.0)
+port.initialize_input_ports()
+port.initialize_output_ports()
 port.set_beepfreq(800)

@@ -5,16 +5,12 @@
 #
 import pigpio
 
-# connect to pigpiod daemon
-#
 pi=pigpio.pi()
 if not pi.connected:
     exit()
 
-# definition of ports
 #   The numbers are Broadcom's GPIO number of BCM2835,
 #   not RPi's assigned numbers.
-#
 In_A=23
 In_B=24
 In_C=25
@@ -22,32 +18,19 @@ In_C=25
 Out_T=22  # TX Control line
 Out_M=18  # PWM output - for side tone
 
-# initialization of input ports
-#
-for port in [In_A, In_B, In_C]:
-    pi.set_mode(port, pigpio.INPUT)
+def initialize_input_ports():
+    for port in [In_A, In_B, In_C]:
 
-    # Input will be pulled-up.
-    # So, to mark input port,
-    # that pin should be contacted to GND,
-    # via a current-limit resistor.
-    #
-    pi.set_pull_up_down(port, pigpio.PUD_UP)
+        pi.set_mode(            port, pigpio.INPUT)
+        pi.set_pull_up_down(    port, pigpio.PUD_UP)
 
-    # anti-chattering
-    # The tolerance is 3ms.
-    #
-    pi.set_glitch_filter(port, 3000)
+        # debounce; tolerance is 3ms.
+        pi.set_glitch_filter(port, 3000)
 
-# and initialization of output ports
-#
-pi.set_mode(Out_T, pigpio.OUTPUT)
-
-
-
-pi.set_mode(Out_M, pigpio.OUTPUT)
-# ( gpio, PWMfreq, PWMduty )
-pi.hardware_PWM(Out_M, 0, 0)
+def initialize_output_ports():
+    pi.set_mode(Out_M, pigpio.OUTPUT)
+    # ( gpio, PWMfreq, PWMduty )
+    pi.hardware_PWM(Out_M, 0, 0)
 
 # activate TX control line
 #
