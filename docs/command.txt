@@ -1,0 +1,88 @@
+=====[ PiCW.py commands ]======================================================
+                                       |
+number   : set speed                   |
+"<", ">" : slower/faster               |
+" "text  : transmit text directly      |
+                                       |record [on|off|start: record keying
+tx [off|on]         : TX control line  |       |stop]
+beep [off|on|freq]  : side tone        |play [speed]        : replay keying
+straight [off|on]   : straight key     |training <CHARTYPES>: training mode
+paddle [off|iambic|iambic-rev|bug|     |show                : display settings
+        bug-rev|sideswiper]            |speed [WPM|CPM|QRS] : toggle speed unit
+                    : paddle action    |lettergap [gapratio]: letter gap length
+iambic [a|b]        : iambic mode      |load <file_name>    : load config
+kb                  : keyboard transmit|help                : display help
+xmit <file_name> ...: file transmit    |?                   : display this
+                                       |quit, exit, bye     : exit from PiCW.py
+
+a number:
+            set speed of paddle and message keyer directly
+
+some "<" or ">" characters:
+            change speed by numbers of character
+                "<" ... 0.5WPM slower
+                ">" ... 0.5WPM faster
+
+            example:  ">>>>>>" means 3.0WPM faster
+                         "<<<" means 1.5WPM slower
+
+text string beginning with a space:
+            transmit the text string directly
+            Note: You can send ...-. by the notation [VA] .
+                  [eeetet] is also OK.
+
+tx [OFF|ON]         :  disable/enable controlling line to transmitter
+
+beep [OFF|ON|freq]  :  disable/enable or set freqency[Hz] of side tone
+
+straight [OFF|ON]   :  disable/enable straight key action
+
+paddle [OFF|IAMBIC|IAMBIC-REV|BUG|BUG-REV|SIDESWIPER]
+                    :  disable paddle action
+                       or enable the paddle by specified type
+                       *-rev swaps dot/dash paddle.
+
+iambic [A|B]        :  operation mode of imabic paddle
+
+kb                  :  enter keyboard transmit mode
+                       By pressing <ESC> or '$',
+                       you can exit from this mode.
+
+xmit <file_name> ...:  transmit contents of text file
+
+recording [OFF|ON|STOP|START]
+                    :  start/stop record of keying
+                       OFF and STOP are the same,
+                       ON and START, too.
+
+play [speed]        :  replay keying with the speed
+
+training [A|N|S|string] ...
+                    :  start training mode
+                       transmit randomly-generated 100 words
+                       A)lpha, N)um and S)ymbol are type of characters.
+                       string is characters to be trained.
+
+show                :  display settting parameters
+
+speed [WPM|CPM|QRS] :  set speed unit words or characters per a minute
+
+lettergap [gapratio]:  set gap duration between letters
+                       gapratio is a times of dot duration
+
+load <file_name>    :  load console command from a file
+
+help                :  display this help message
+
+?                   :  display short help message
+
+quit, exit, bye     :  exit from PiCW.py
+
+Note:
+    When computer transmits text message,
+    you can break that by pressing Control-C
+    or by pressing a straight key or any paddle lever.
+
+    By pressing sraight key and dot paddle simultaneously,
+    speed of paddle keying goes slow down.
+    Straight key and dash paddle, speed up.
