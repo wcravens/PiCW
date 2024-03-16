@@ -43,10 +43,11 @@ for port in [In_A, In_B, In_C]:
 #
 pi.set_mode(Out_T, pigpio.OUTPUT)
 
-Freq_M=1500 # side tone frequency (Hz)
+
+
 pi.set_mode(Out_M, pigpio.OUTPUT)
-pi.hardware_PWM(Out_M, Freq_M, 0)
-pi.set_PWM_frequency(Out_M, Freq_M)
+# ( gpio, PWMfreq, PWMduty )
+pi.hardware_PWM(Out_M, 0, 0)
 
 # activate TX control line
 #
@@ -77,7 +78,7 @@ def get_beepfreq():
 #
 def set_beepfreq(hz):
     pi.set_PWM_frequency(Out_M, hz)
-    pi.set_PWM_dutycycle(Out_M, 0)
+
 
 # get available side tone frequencies
 #
