@@ -3,7 +3,7 @@
 import threading
 import InputPort as inPort
 import KeyingControl   as key
-import StraightKeyer   as straight_key
+import SinglePoleKeyer   as straight_key
 import CwUtilities     as utl
 
 # states of a paddle
@@ -190,9 +190,9 @@ def initialize():
 #
 def terminate():
     global ev_terminate
-    global iambic
+    global iambic_thread_handle
     # terminate iambic subthread
     #
     ev_terminate=True
     ev_trigger.set()
-    iambic.join()
+    iambic_thread_handle.join()

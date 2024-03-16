@@ -10,8 +10,8 @@ import InputPort as inPort
 import OutputPort as outPort
 
 import KeyingControl   as key
-import StraightKeyer   as straight_key
-import PaddleKeyer     as pdl
+import SinglePoleKeyer   as straight_key
+import DualPoleKeyer     as pdl
 import TextKeyer       as txt
 import MemoryKeyer     as mem
 import CwUtilities     as utl

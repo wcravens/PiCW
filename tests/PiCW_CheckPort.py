@@ -7,7 +7,7 @@ import time
 import sys
 import InputPort as inPort
 import KeyingControl   as key
-import StraightKeyer   as straight_key
+import SinglePoleKeyer   as straight_key
 
 # disable responses for all input ports
 #

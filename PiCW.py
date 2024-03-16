@@ -8,7 +8,7 @@
 import os.path
 import InputPort as inPort
 import OutputPort as outPort
-import PaddleKeyer     as pdl
+import DualPoleKeyer     as pdl
 import CwUtilities     as utl
 import MemoryKeyer     as mem
 import ConsoleCommands as cmd
