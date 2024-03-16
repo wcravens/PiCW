@@ -2,7 +2,6 @@
 
 import InputPort as inPort
 import KeyingControl   as key
-import TextKeyer       as txt
 
 # callback function
 #
