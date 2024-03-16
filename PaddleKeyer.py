@@ -150,12 +150,13 @@ def dash_action(state):
 #
 #         paddle        ----------actions for-----------  Is speed
 #         type          In_A             In_B             tunable?
-typetab={'OFF':        [straight_key.null_action, straight_key.null_action, False],
-         'IAMBIC':     [dot_action,      dash_action,     True],
-         'IAMBIC-REV': [dash_action,     dot_action,      True],
-         'BUG':        [dot_action,      straight_key.action,      False],
-         'BUG-REV':    [straight_key.action,      dot_action,      False],
-         'SIDESWIPER': [straight_key.action,      straight_key.action,      False]}
+typetab={'OFF':        [straight_key.null_action,   straight_key.null_action,   False   ],
+         'IAMBIC':     [dot_action,                 dash_action,                True    ],
+         'IAMBIC-REV': [dash_action,                dot_action,                 True    ],
+         'BUG':        [dot_action,                 straight_key.action,        False   ],
+         'BUG-REV':    [straight_key.action,        dot_action,                 False   ],
+         'SIDESWIPER': [straight_key.action,        straight_key.action,        False   ]
+         }
 
 # set paddle type
 #   returns True if setting succeeded
