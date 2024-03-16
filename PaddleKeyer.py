@@ -19,6 +19,7 @@ pressing_dot =False  # current state of dot paddle. True when the paddle is bein
 pressing_dash=False  # current state of dash paddle.
 paddle_event=PADDLE_NONE  # paddle invoked event
 is_squeezed=PADDLE_NONE   # squeezed paddle while keying
+iambic = None
 
 # this event object is used to notify any paddle pressed
 # from the iambic callback function
@@ -180,21 +181,16 @@ def settype(ptype):
 def gettype():
     return paddle_type
 
-# activate iambic subthread
-#
-iambic=threading.Thread(target=keying_iambic)
-iambic.start()
-
-# initial port bindings
-#
-settype('IAMBIC')
-straight_key.set_enabled(True)
+def initialize():
+    global iambic
+    iambic = threading.Thread(target=keying_iambic)
+    iambic.start()
 
 # terminate process
 #
 def terminate():
     global ev_terminate
-
+    global iambic
     # terminate iambic subthread
     #
     ev_terminate=True

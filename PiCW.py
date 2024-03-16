@@ -32,6 +32,11 @@ inPort.initialize_input_ports()
 outPort.initialize_output_ports()
 outPort.set_beepfreq( 800 )
 
+
+pdl.settype('IAMBIC')
+pdl.initialize()
+pdl.straight_key.set_enabled(True)
+
 # command console
 #
 while True:
