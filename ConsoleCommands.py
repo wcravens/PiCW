@@ -10,7 +10,7 @@ import InputPort as inPort
 import OutputPort as outPort
 
 import KeyingControl   as key
-import StraightKeyer   as stk
+import StraightKeyer   as straight_key
 import PaddleKeyer     as pdl
 import TextKeyer       as txt
 import MemoryKeyer     as mem
@@ -60,7 +60,7 @@ def beep(act=None):
 # Console Command - STRAIGHT
 #
 def straight(act=None):
-    stk.set_enabled(togglecmd(act, 'Straight key', stk.get_enabled()))
+    straight_key.set_enabled(togglecmd(act, 'Straight key', straight_key.get_enabled()))
     return True
 
 # Console Command - PADDLE
@@ -248,7 +248,7 @@ def show(act=None):
     print('   Gap between every letter:', key.getlettergap(), 'of dots.')
     print('                 TX control:', 'ON' if key.tx_enable else 'OFF')
     print('                  Side tone:', 'ON' if key.beep_enable else 'OFF', ', freq', outPort.get_beepfreq(), 'Hz')
-    print('               Straight key:', 'ON' if stk.get_enabled() else 'OFF')
+    print('               Straight key:', 'ON' if straight_key.get_enabled() else 'OFF')
     print('                Paddle type:', pdl.gettype())
     print('                Iambic Type:', 'Mode B' if pdl.modeB else 'Mode A')
     print('              Record keying:', 'ON' if mem.recording else 'OFF')

@@ -3,7 +3,7 @@
 import threading
 import InputPort as inPort
 import KeyingControl   as key
-import StraightKeyer   as stk
+import StraightKeyer   as straight_key
 import CwUtilities     as utl
 
 # states of a paddle
@@ -37,13 +37,13 @@ def keying_iambic():
             key.dot()
             # If Straight key is also being pressed,
             # decrease speed
-            if stk.pressing and tune_speed:
+            if straight_key.pressing and tune_speed:
                 key.setspeed(key.getspeed()-0.5)
                 print('<', utl.speedstr(), '>', sep='')
         elif k==PADDLE_DASH:
             key.dash()
             # increase speed as of dot
-            if stk.pressing and tune_speed:
+            if straight_key.pressing and tune_speed:
                 key.setspeed(key.getspeed()+1.5)
                 print('<', utl.speedstr(), '>', sep='')
 
@@ -150,12 +150,12 @@ def dash_action(state):
 #
 #         paddle        ----------actions for-----------  Is speed
 #         type          In_A             In_B             tunable?
-typetab={'OFF':        [stk.null_action, stk.null_action, False],
+typetab={'OFF':        [straight_key.null_action, straight_key.null_action, False],
          'IAMBIC':     [dot_action,      dash_action,     True],
          'IAMBIC-REV': [dash_action,     dot_action,      True],
-         'BUG':        [dot_action,      stk.action,      False],
-         'BUG-REV':    [stk.action,      dot_action,      False],
-         'SIDESWIPER': [stk.action,      stk.action,      False]}
+         'BUG':        [dot_action,      straight_key.action,      False],
+         'BUG-REV':    [straight_key.action,      dot_action,      False],
+         'SIDESWIPER': [straight_key.action,      straight_key.action,      False]}
 
 # set paddle type
 #   returns True if setting succeeded
@@ -187,7 +187,7 @@ iambic.start()
 # initial port bindings
 #
 settype('IAMBIC')
-stk.set_enabled(True)
+straight_key.set_enabled(True)
 
 # terminate process
 #
