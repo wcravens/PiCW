@@ -49,12 +49,12 @@ def beep(act=None):
             freq=int(ac)
             if 0<freq and freq<20000:
                 inPort.set_beepfreq(freq)
-                print('Side tone set to', inPort.get_beepfreq(), 'Hz.')
+                print('Side tone set to', outPort.get_beepfreq(), 'Hz.')
         return st
 
     key.beep_enable=togglecmd(act, 'Side tone', key.beep_enable, func)
     if act==None:
-        print('freq:', inPort.get_beepfreq(), 'Hz')
+        print('freq:', outPort.get_beepfreq(), 'Hz')
     return True
 
 # Console Command - STRAIGHT
@@ -247,7 +247,7 @@ def show(act=None):
     print('  Paddle and computer speed:', utl.speedstr())
     print('   Gap between every letter:', key.getlettergap(), 'of dots.')
     print('                 TX control:', 'ON' if key.tx_enable else 'OFF')
-    print('                  Side tone:', 'ON' if key.beep_enable else 'OFF', ', freq', inPort.get_beepfreq(), 'Hz')
+    print('                  Side tone:', 'ON' if key.beep_enable else 'OFF', ', freq', outPort.get_beepfreq(), 'Hz')
     print('               Straight key:', 'ON' if stk.getaction() else 'OFF')
     print('                Paddle type:', pdl.gettype())
     print('                Iambic Type:', 'Mode B' if pdl.modeB else 'Mode A')
