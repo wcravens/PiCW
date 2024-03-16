@@ -1,6 +1,6 @@
 # StraightKeyer - logic for a straight key
 
-import InputOutputPort as port
+import InputPort as inPort
 import KeyingControl   as key
 import TextKeyer       as txt
 
@@ -36,9 +36,9 @@ def setaction(newact):
     if actstat != newact:
         actstat = not not newact
         if actstat:
-            port.bind(port.In_C, action)
+            inPort.bind(inPort.In_C, action)
         else:
-            port.bind(port.In_C, null_action)
+            inPort.bind(inPort.In_C, null_action)
 
 actstat=False  # current status
 setaction(True)

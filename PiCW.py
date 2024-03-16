@@ -6,7 +6,7 @@
 #       (kaw@on.rim.or.jp, ex JH0NUQ)
 
 import os.path
-import InputOutputPort as port
+import OutputPort as outPort
 import PaddleKeyer     as pdl
 import CwUtilities     as utl
 import MemoryKeyer     as mem
@@ -47,6 +47,6 @@ while True:
 # termination processes
 #
 pdl.terminate()
-port.terminate()
+outPort.terminate()
 print()
 print("Bye bye...")

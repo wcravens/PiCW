@@ -6,7 +6,9 @@ import time
 import readline
 import os
 import random; random.seed()
-import InputOutputPort as port
+import InputPort as inPort
+import OutputPort as outPort
+
 import KeyingControl   as key
 import StraightKeyer   as stk
 import PaddleKeyer     as pdl
@@ -46,13 +48,13 @@ def beep(act=None):
         if re.match(r"[0-9]+$", ac):
             freq=int(ac)
             if 0<freq and freq<20000:
-                port.set_beepfreq(freq)
-                print('Side tone set to', port.get_beepfreq(), 'Hz.')
+                inPort.set_beepfreq(freq)
+                print('Side tone set to', inPort.get_beepfreq(), 'Hz.')
         return st
 
     key.beep_enable=togglecmd(act, 'Side tone', key.beep_enable, func)
     if act==None:
-        print('freq:', port.get_beepfreq(), 'Hz')
+        print('freq:', inPort.get_beepfreq(), 'Hz')
     return True
 
 # Console Command - STRAIGHT
@@ -245,7 +247,7 @@ def show(act=None):
     print('  Paddle and computer speed:', utl.speedstr())
     print('   Gap between every letter:', key.getlettergap(), 'of dots.')
     print('                 TX control:', 'ON' if key.tx_enable else 'OFF')
-    print('                  Side tone:', 'ON' if key.beep_enable else 'OFF', ', freq', port.get_beepfreq(), 'Hz')
+    print('                  Side tone:', 'ON' if key.beep_enable else 'OFF', ', freq', inPort.get_beepfreq(), 'Hz')
     print('               Straight key:', 'ON' if stk.getaction() else 'OFF')
     print('                Paddle type:', pdl.gettype())
     print('                Iambic Type:', 'Mode B' if pdl.modeB else 'Mode A')
@@ -450,7 +452,7 @@ ARG_FILE=3
 cmds={'TX':        {FN: txline,     ARG: ['OFF', 'ON']},
       'BEEP':      {FN: beep,       ARG: ['OFF', 'ON']+[str(freq)
                                                         for freq
-                                                        in port.get_avail_beepfreq()]},
+                                                        in outPort.get_avail_beepfreq()]},
       'STRAIGHT':  {FN: straight,   ARG: ['OFF', 'ON']},
       'PADDLE':    {FN: paddle,     ARG: sorted(pdl.typetab.keys())},
       'IAMBIC':    {FN: iambic,     ARG: ['A', 'B']},

@@ -1,7 +1,7 @@
 # PaddleKeyer - logic for paddles with squeezing
 
 import threading
-import InputOutputPort as port
+import InputPort as inPort
 import KeyingControl   as key
 import StraightKeyer   as stk
 import CwUtilities     as utl
@@ -166,8 +166,8 @@ def settype(ptype):
 
     ptype=ptype.upper()
     if ptype in typetab.keys():
-        port.bind(port.In_A, typetab[ptype][0])
-        port.bind(port.In_B, typetab[ptype][1])
+        inPort.bind(inPort.In_A, typetab[ptype][0])
+        inPort.bind(inPort.In_B, typetab[ptype][1])
         paddle_type=ptype
         tune_speed=typetab[ptype][2]
         return True

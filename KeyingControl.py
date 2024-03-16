@@ -1,7 +1,9 @@
 # KeyingControl - Abstraction Layer for Keying
 
 import time
-import InputOutputPort as port
+import InputPort as inPort
+import OutputPort as outPort
+
 import MemoryKeyer     as mem
 
 # key/paddle status
@@ -102,9 +104,9 @@ def mark():
         mem.tstamp.append(time.time())
         mem.keystat.append(PRESSED)
     if tx_enable:
-        port.txline_on()
+        outPort.txline_on()
     if beep_enable:
-        port.beep_on()
+        outPort.beep_on()
 
 # space is the state when the transmission line is inactive.
 #
@@ -113,9 +115,9 @@ def space():
         mem.tstamp.append(time.time())
         mem.keystat.append(RELEASED)
     if tx_enable:
-        port.txline_off()
+        outPort.txline_off()
     if beep_enable:
-        port.beep_off()
+        outPort.beep_off()
 
 # make transmission line active for sec
 #
@@ -175,6 +177,6 @@ def reset_abort_request():
 #
 setspeed(18)
 setlettergap(3.0)
-port.initialize_input_ports()
-port.initialize_output_ports()
-port.set_beepfreq(800)
+inPort.initialize_input_ports()
+outPort.initialize_output_ports()
+outPort.set_beepfreq(800)
