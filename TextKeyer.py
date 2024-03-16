@@ -2,7 +2,7 @@
 
 import sys
 import KeyingControl   as key
-import CwUtilities     as utl
+import CwUtilities     as cw_utils
 
 # function table for dot, dash, and word space
 #
@@ -47,12 +47,12 @@ def chars(chrs):
     for ch in list(chrs):
         if ch=='>':
             key.setspeed(key.getspeed()+0.5)
-            print('<'+utl.speedstr()+'>', end='')
+            print('<'+cw_utils.speedstr()+'>', end='')
             sys.stdout.flush()
             return
         elif ch=='<':
             key.setspeed(key.getspeed()-0.5)
-            print('<'+utl.speedstr()+'>', end='')
+            print('<'+cw_utils.speedstr()+'>', end='')
             sys.stdout.flush()
             return
         elif ch in codetab:

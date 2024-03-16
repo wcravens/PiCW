@@ -2,7 +2,7 @@
 
 import time
 import KeyingControl as key
-import CwUtilities   as utl
+import CwUtilities   as cw_utils
 
 recording=False
 tstamp   =[]   # sequence of time stamp
@@ -64,7 +64,7 @@ def replay(speed, barlen=0):
     # setups for progress bar
     #
     if 1<=barlen:
-        progbar=utl.ProgressBar(barlen, int(len(tstamp)))
+        progbar=cw_utils.ProgressBar(barlen, int(len(tstamp)))
         progbar.begin()
 
         barstep=int(len(tstamp)/barlen/2)+1  # frequency of bar update

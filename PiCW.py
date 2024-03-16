@@ -8,9 +8,9 @@
 import os.path
 import InputPort as inPort
 import OutputPort as outPort
-import DualPoleKeyer     as pdl
-import CwUtilities     as utl
-import MemoryKeyer     as mem
+import DualPoleKeyer     as dual_pole_keyer
+import CwUtilities     as cw_utils
+import MemoryKeyer     as memory_keyer
 import ConsoleCommands as cmd
 
 print("Welcome to PiCW.py")
@@ -33,9 +33,9 @@ outPort.initialize_output_ports()
 outPort.set_beepfreq( 800 )
 
 
-pdl.settype('IAMBIC')
-pdl.initialize()
-pdl.straight_key.set_enabled(True)
+dual_pole_keyer.settype('IAMBIC')
+dual_pole_keyer.initialize()
+dual_pole_keyer.straight_key.set_enabled(True)
 
 # command console
 #
@@ -43,8 +43,8 @@ while True:
     # read user's input
     #
     try:
-        line=input("\n"+utl.speedstr()+\
-                   ('/REC' if mem.recording else '')+\
+        line=input("\n"+cw_utils.speedstr()+\
+                   ('/REC' if memory_keyer.recording else '')+\
                    ':')
         print()
     except KeyboardInterrupt:
@@ -57,7 +57,7 @@ while True:
 
 # termination processes
 #
-pdl.terminate()
+dual_pole_keyer.terminate()
 outPort.terminate()
 print()
 print("Bye bye...")

@@ -3,7 +3,7 @@
 import time
 import OutputPort as outPort
 
-import MemoryKeyer     as mem
+import MemoryKeyer     as memory_keyer
 
 # key/paddle status
 #   for callback functions
@@ -99,9 +99,9 @@ def getlettergap():
 # mark is the state when the transmission line is active.
 #
 def mark():
-    if mem.recording:
-        mem.tstamp.append(time.time())
-        mem.keystat.append(PRESSED)
+    if memory_keyer.recording:
+        memory_keyer.tstamp.append(time.time())
+        memory_keyer.keystat.append(PRESSED)
     if tx_enable:
         outPort.txline_on()
     if beep_enable:
@@ -110,9 +110,9 @@ def mark():
 # space is the state when the transmission line is inactive.
 #
 def space():
-    if mem.recording:
-        mem.tstamp.append(time.time())
-        mem.keystat.append(RELEASED)
+    if memory_keyer.recording:
+        memory_keyer.tstamp.append(time.time())
+        memory_keyer.keystat.append(RELEASED)
     if tx_enable:
         outPort.txline_off()
     if beep_enable:

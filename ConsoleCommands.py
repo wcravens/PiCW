@@ -10,11 +10,11 @@ import InputPort as inPort
 import OutputPort as outPort
 
 import KeyingControl   as key
-import SinglePoleKeyer   as straight_key
-import DualPoleKeyer     as pdl
-import TextKeyer       as txt
-import MemoryKeyer     as mem
-import CwUtilities     as utl
+import SinglePoleKeyer as straight_keyey
+import DualPoleKeyer   as dual_pole_keyer
+import TextKeyer       as text_keyer
+import MemoryKeyer     as memory_keyer
+import CwUtilities     as cw_utils
 
 # function for toggling status - on and off
 #
@@ -60,21 +60,21 @@ def beep(act=None):
 # Console Command - STRAIGHT
 #
 def straight(act=None):
-    straight_key.set_enabled(togglecmd(act, 'Straight key', straight_key.get_enabled()))
+    straight_keyey.set_enabled(togglecmd(act, 'Straight key', straight_keyey.get_enabled()))
     return True
 
 # Console Command - PADDLE
 #
 def paddle(ptype=None):
     if ptype==None:
-        print('Paddle type is ', pdl.gettype(), '.', sep='')
+        print('Paddle type is ', dual_pole_keyer.gettype(), '.', sep='')
         return True
 
-    if pdl.settype(ptype):
-        print('Paddle type is set to ', pdl.gettype(), '.', sep='')
+    if dual_pole_keyer.settype(ptype):
+        print('Paddle type is set to ', dual_pole_keyer.gettype(), '.', sep='')
     else:
         print('? unknown paddle type -', ptype)
-        print('  Paddle type is one of ' , ', '.join(sorted(pdl.typetab.keys())), '.', sep='')
+        print('  Paddle type is one of ' , ', '.join(sorted(dual_pole_keyer.typetab.keys())), '.', sep='')
     return True
 
 # Console Command - IAMBIC
@@ -83,14 +83,14 @@ def paddle(ptype=None):
 #
 def iambic(mode=None):
     if mode==None:
-        print('Iambic operation mode is type', 'B.' if pdl.modeB else 'A.')
+        print('Iambic operation mode is type', 'B.' if dual_pole_keyer.modeB else 'A.')
         return True
 
     if mode.upper()=='A':
-        pdl.modeB=False
+        dual_pole_keyer.modeB=False
         print('Iambic operation mode is set to A.')
     elif mode.upper()=='B':
-        pdl.modeB=True
+        dual_pole_keyer.modeB=True
         print('Iambic operation mode is set to B.')
 
     return True
@@ -103,9 +103,9 @@ def iambic(mode=None):
 def kb_send(act=None):
     def charfunc(ch):
         if ch=="\x08" or ch=="\x7f":
-            txt.sendstr('[HH]')
+            text_keyer.sendstr('[HH]')
         else:
-            txt.sendstr(ch)
+            text_keyer.sendstr(ch)
 
 
     print('Entering keyboard transmission mode...')
@@ -116,7 +116,7 @@ def kb_send(act=None):
 
     # start transmission
     #
-    utl.with_keytyping(charfunc,
+    cw_utils.with_keytyping(charfunc,
                        lambda ch : ch == '$' or ch == "\x1b" or key.abort_requested())
     return True
 
@@ -126,13 +126,13 @@ def kb_send(act=None):
 #
 def record(act=None):
     if act==None:
-        print('Keying is ', '' if mem.recording else 'not ', 'being recorded.', sep='')
+        print('Keying is ', '' if memory_keyer.recording else 'not ', 'being recorded.', sep='')
         return True
 
     if act.upper() in ['ON', 'START']:
-        mem.recstart()
+        memory_keyer.recstart()
     elif act.upper() in ['OFF', 'STOP']:
-        mem.recstop()
+        memory_keyer.recstop()
 
     return True
 
@@ -148,7 +148,7 @@ def play(speed=None):
         return True
     speed=float(speed)
 
-    mem.replay(speed,
+    memory_keyer.replay(speed,
                int(9*int(subprocess.check_output(['tput', 'cols']))/10))
                # progress bar is filled to 90% of width of terminal
 
@@ -169,7 +169,7 @@ def xmit_file(*filenames):
                 while True:
                     line=message.readline()
                     if line:
-                        if not (txt.sendstr(line)):
+                        if not (text_keyer.sendstr(line)):
                             print()
                             return True
                     else:
@@ -221,19 +221,19 @@ def training(*chartypes):
     print()
     time.sleep(5)
     print('       : ', end='')
-    txt.sendstr('HR HR = ')
+    text_keyer.sendstr('HR HR = ')
     print()
     for line in range(lines):
         print('{:3d}/{:3d}: '.format(line*words+1, maxwords), end='')
         for word in range(words):
             for char in range(chars):
-                if key.abort_requested() or not txt.sendstr(random.choice(letters)):
+                if key.abort_requested() or not text_keyer.sendstr(random.choice(letters)):
                     print()
                     return True
-            txt.sendstr(' ')
+            text_keyer.sendstr(' ')
         print()
     print('       : ', end='')
-    txt.sendstr('+')
+    text_keyer.sendstr('+')
 
     print()
     return True
@@ -244,14 +244,14 @@ def training(*chartypes):
 #
 def show(act=None):
     print('Current settings:')
-    print('  Paddle and computer speed:', utl.speedstr())
+    print('  Paddle and computer speed:', cw_utils.speedstr())
     print('   Gap between every letter:', key.getlettergap(), 'of dots.')
     print('                 TX control:', 'ON' if key.tx_enable else 'OFF')
     print('                  Side tone:', 'ON' if key.beep_enable else 'OFF', ', freq', outPort.get_beepfreq(), 'Hz')
-    print('               Straight key:', 'ON' if straight_key.get_enabled() else 'OFF')
-    print('                Paddle type:', pdl.gettype())
-    print('                Iambic Type:', 'Mode B' if pdl.modeB else 'Mode A')
-    print('              Record keying:', 'ON' if mem.recording else 'OFF')
+    print('               Straight key:', 'ON' if straight_keyey.get_enabled() else 'OFF')
+    print('                Paddle type:', dual_pole_keyer.gettype())
+    print('                Iambic Type:', 'Mode B' if dual_pole_keyer.modeB else 'Mode A')
+    print('              Record keying:', 'ON' if memory_keyer.recording else 'OFF')
     return True
 
 # Console Command - SPEED
@@ -268,18 +268,18 @@ def speed(act=None):
             return ''
 
     if act==None:
-        print('Speed unit is ', utl.speed_unit, ' (',
-              unitword(utl.speed_unit), ').', sep='')
+        print('Speed unit is ', cw_utils.speed_unit, ' (',
+              unitword(cw_utils.speed_unit), ').', sep='')
         return True
 
     if act.upper() in ('CPM', 'WPM', 'QRS'):
-        utl.speed_unit=act.upper()
+        cw_utils.speed_unit=act.upper()
     else:
         print('? unknown speed unit')
         return True
 
-    print('Speed unit is set to ', utl.speed_unit, ' (',
-          unitword(utl.speed_unit), ').', sep='')
+    print('Speed unit is set to ', cw_utils.speed_unit, ' (',
+          unitword(cw_utils.speed_unit), ').', sep='')
     return True
 
 # Console Command - LETTERGAP
@@ -454,7 +454,7 @@ cmds={'TX':        {FN: txline,     ARG: ['OFF', 'ON']},
                                                         for freq
                                                         in outPort.get_avail_beepfreq()]},
       'STRAIGHT':  {FN: straight,   ARG: ['OFF', 'ON']},
-      'PADDLE':    {FN: paddle,     ARG: sorted(pdl.typetab.keys())},
+      'PADDLE':    {FN: paddle,     ARG: sorted(dual_pole_keyer.typetab.keys())},
       'IAMBIC':    {FN: iambic,     ARG: ['A', 'B']},
       'KB':        {FN: kb_send,    ARG: None},
       'XMIT':      {FN: xmit_file,  ARG: ARG_FILE},
@@ -617,7 +617,7 @@ def parser(line):
     #
     if re.match(r"[0-9.]+", line):
         try:
-            key.setspeed(utl.speed2float(line))
+            key.setspeed(cw_utils.speed2float(line))
         except:
             pass # in case of float() fails
         return True
@@ -632,7 +632,7 @@ def parser(line):
     #
     elif re.match(r" .+", line):
         key.reset_abort_request()
-        txt.sendstr(line[1:])
+        text_keyer.sendstr(line[1:])
         return True
 
     # call console commands

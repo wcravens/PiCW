@@ -7,13 +7,13 @@ import time
 import sys
 import InputPort as inPort
 import KeyingControl   as key
-import SinglePoleKeyer   as straight_key
+import SinglePoleKeyer   as straight_keyey
 
 # disable responses for all input ports
 #
-inPort.bind(inPort.In_A, straight_key.null_action)
-inPort.bind(inPort.In_B, straight_key.null_action)
-inPort.bind(inPort.In_C, straight_key.null_action)
+inPort.bind(inPort.In_A, straight_keyey.null_action)
+inPort.bind(inPort.In_B, straight_keyey.null_action)
+inPort.bind(inPort.In_C, straight_keyey.null_action)
 
 # monitoring TX control port
 # for maxcount*interval seconds

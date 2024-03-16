@@ -4,7 +4,7 @@ import argparse
 import sys
 import InputOutputPort as port
 import KeyingControl   as key
-import TextKeyer       as txt
+import TextKeyer       as text_keyer
 
 cmdopt = argparse.ArgumentParser()
 cmdopt.add_argument("-s", type=int, default=30)
@@ -25,7 +25,7 @@ def terminate():
 #
 try :
     for line in sys.stdin :
-        if not txt.sendstr(line):
+        if not text_keyer.sendstr(line):
             break
 
     terminate()

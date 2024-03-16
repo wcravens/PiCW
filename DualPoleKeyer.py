@@ -149,8 +149,8 @@ def dash_action(state):
 
 # property for every paddle type
 #
-#         paddle        ----------actions for-----------  Is speed
-#         type          In_A             In_B             tunable?
+#         paddle        -------------------------actions for------------------  Is speed
+#         type          In_A                        In_B                        tunable?
 typetab={'OFF':        [straight_key.null_action,   straight_key.null_action,   False   ],
          'IAMBIC':     [dot_action,                 dash_action,                True    ],
          'IAMBIC-REV': [dash_action,                dot_action,                 True    ],
