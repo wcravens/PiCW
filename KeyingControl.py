@@ -1,7 +1,6 @@
 # KeyingControl - Abstraction Layer for Keying
 
 import time
-import InputPort as inPort
 import OutputPort as outPort
 
 import MemoryKeyer     as mem
