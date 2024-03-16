@@ -17,8 +17,8 @@ PADDLE_DASH=2
 #
 pressing_dot =False  # current state of dot paddle. True when the paddle is being pressed.
 pressing_dash=False  # current state of dash paddle.
-trig_paddle=PADDLE_NONE  # paddle invoked event
-sqz_paddle=PADDLE_NONE   # squeezed paddle while keying
+paddle_event=PADDLE_NONE  # paddle invoked event
+is_squeezed=PADDLE_NONE   # squeezed paddle while keying
 
 # this event object is used to notify any paddle pressed
 # from the iambic callback function
@@ -58,7 +58,7 @@ def keying_iambic():
     global ev_terminate
     ev_terminate=False
 
-    global sqz_paddle
+    global is_squeezed
 
     global modeB
     modeB=False  # default: mode A
@@ -76,13 +76,13 @@ def keying_iambic():
         # sequences of keying
         #
         modeB_sqz=PADDLE_NONE  # first squeezed paddle of every event
-        sendkey=trig_paddle    # send by triggered paddle
+        sendkey=paddle_event    # send by triggered paddle
 
         # send squeezed key
         #   or keep pressing
         #
         for i in range(key.sendable_dots):  # for fail-safe (60 sec max)
-            sqz_paddle=PADDLE_NONE  # possibly changed while calling send()
+            is_squeezed=PADDLE_NONE  # possibly changed while calling send()
             send(sendkey)
 
             # send last dot/dash ?
@@ -90,12 +90,12 @@ def keying_iambic():
             if modeB \
                and modeB_sqz==PADDLE_NONE \
                and pressing_dot and pressing_dash:
-                modeB_sqz=sqz_paddle
+                modeB_sqz=is_squeezed
 
             # determine next dot/dash
             #
-            if not sqz_paddle==PADDLE_NONE:  # squeezed. send it
-                sendkey=sqz_paddle
+            if not is_squeezed==PADDLE_NONE:  # squeezed. send it
+                sendkey=is_squeezed
 
             # what to send, by status of pressing paddles
             #
@@ -115,36 +115,36 @@ def keying_iambic():
 # callback function for iambic dot paddle
 #
 def dot_action(state):
-    global pressing_dot, trig_paddle, sqz_paddle
+    global pressing_dot, paddle_event, is_squeezed
 
     # paddle pressed
     if state==key.PRESSED:
         pressing_dot=True
-        trig_paddle=PADDLE_DOT
-        if sqz_paddle==PADDLE_NONE:
-            sqz_paddle=PADDLE_DOT
+        paddle_event=PADDLE_DOT
+        if is_squeezed==PADDLE_NONE:
+            is_squeezed=PADDLE_DOT
         ev_trigger.set() # notify to iambic subthread
     # paddle released
     elif state==key.RELEASED:
         pressing_dot=False
-        trig_paddle=PADDLE_NONE # ignore releasing
+        paddle_event=PADDLE_NONE # ignore releasing
 
 # callback function for iambic dash paddle
 #
 def dash_action(state):
-    global pressing_dash, trig_paddle, sqz_paddle
+    global pressing_dash, paddle_event, is_squeezed
 
     # paddle pressed
     if state==key.PRESSED:
         pressing_dash=True
-        trig_paddle=PADDLE_DASH
-        if sqz_paddle==PADDLE_NONE:
-            sqz_paddle=PADDLE_DASH
+        paddle_event=PADDLE_DASH
+        if is_squeezed==PADDLE_NONE:
+            is_squeezed=PADDLE_DASH
         ev_trigger.set() # notify to iambic subthread
     # paddle released
     elif state==key.RELEASED:
         pressing_dash=False
-        trig_paddle=PADDLE_NONE # ignore releasing
+        paddle_event=PADDLE_NONE # ignore releasing
 
 # property for every paddle type
 #
