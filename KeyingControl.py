@@ -87,7 +87,7 @@ def getspeed():
 cgap_rate=3.0
 
 # cgaprate is number of dots
-# between every letter
+# between every letter; e.g. Farnsworth Timing
 #
 def setlettergap(gap):
     global cgap_rate
@@ -177,6 +177,3 @@ def reset_abort_request():
 #
 setspeed(18)
 setlettergap(3.0)
-inPort.initialize_input_ports()
-outPort.initialize_output_ports()
-outPort.set_beepfreq(800)

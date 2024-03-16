@@ -6,6 +6,7 @@
 #       (kaw@on.rim.or.jp, ex JH0NUQ)
 
 import os.path
+import InputPort as inPort
 import OutputPort as outPort
 import PaddleKeyer     as pdl
 import CwUtilities     as utl
@@ -25,6 +26,11 @@ try:
         cmd.load_file(initfile)
 except:
     pass
+
+
+inPort.initialize_input_ports()
+outPort.initialize_output_ports()
+outPort.set_beepfreq( 800 )
 
 # command console
 #
