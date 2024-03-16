@@ -187,7 +187,7 @@ iambic.start()
 # initial port bindings
 #
 settype('IAMBIC')
-stk.setaction(True)
+stk.set_enabled(True)
 
 # terminate process
 #

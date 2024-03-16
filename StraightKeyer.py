@@ -4,7 +4,7 @@ import InputPort as inPort
 import KeyingControl   as key
 
 pressing=False
-actstat=False  # current status
+is_enabled=False  # current status
 
 # callback function
 #
@@ -30,15 +30,15 @@ def null_action(state):
 
 # initialization
 #
-def getaction():
-    return actstat
+def get_enabled():
+    return is_enabled
 
-def setaction(newact):
-    global actstat
+def set_enabled(enabled):
+    global is_enabled
 
-    if actstat != newact:
-        actstat = not not newact
-        if actstat:
+    if is_enabled != enabled:
+        is_enabled = not not enabled
+        if is_enabled:
             inPort.bind(inPort.In_C, action)
         else:
             inPort.bind(inPort.In_C, null_action)
