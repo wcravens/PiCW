@@ -3,6 +3,9 @@
 import InputPort as inPort
 import KeyingControl   as key
 
+pressing=False
+actstat=False  # current status
+
 # callback function
 #
 def action(state):
@@ -24,10 +27,11 @@ def null_action(state):
     if state==key.PRESSED:
         key.abort_request()
 
+
 # initialization
 #
 def getaction():
-    return not not actstat  # to make return value to bool
+    return actstat
 
 def setaction(newact):
     global actstat
@@ -38,8 +42,3 @@ def setaction(newact):
             inPort.bind(inPort.In_C, action)
         else:
             inPort.bind(inPort.In_C, null_action)
-
-actstat=False  # current status
-setaction(True)
-
-pressing=False
