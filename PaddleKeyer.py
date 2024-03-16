@@ -44,7 +44,7 @@ def keying_iambic():
             key.dash()
             # increase speed as of dot
             if straight_key.pressing and tune_speed:
-                key.setspeed(key.getspeed()+1.5)
+                key.setspeed(key.getspeed()+0.5)
                 print('<', utl.speedstr(), '>', sep='')
 
     # returns opposite paddle
